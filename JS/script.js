@@ -11,6 +11,8 @@ const X_TEXT = "X"
 let currentPlayer = X_TEXT
 let spaces = Array(9).fill(null)
 
+let winnerIndicator =  get getComputedStyle(document.body).getPrpertyValue('--winning-blocks')
+
 const startGame = () => {
     boxes.forEach(box => box.addEventListener('click', boxClicked))
 }
@@ -21,8 +23,9 @@ function boxClicked(e){
     if(!spaces[id]){
         spaces[id] = currentPlayer
         e.target.innerText = currentPlayer
-        if(playerHasWon()){
+        if(playerHasWon(!==false)){
             playertext = `${currentPlayer} has won!!`
+            let winning_Blocks = playerHasWon()
         }
 
         currentPlayer = currentPlayer == X_TEXT ? O_TEXT: X_TEXT
@@ -43,9 +46,10 @@ function playerHasWon(){
         let [a, b, c]= condition
         
         if(spaces[a] && (spaces[a] == spaces[b] && spaces [a] == spaces [c])){
-            
+            return [a,b,c]
         }
     }
+    return false
 }
 
 restartBtn.addEventListener('click', restart)
